@@ -1,8 +1,18 @@
 const square = document.querySelectorAll('.square');
+const reset = document.querySelector('#reset');
+const changeName = document.querySelector('#changeName');
 
 const game = (function () {
     const board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
     let currentPlayer = 1;
+    let name1 = 'Player 1';
+    let name2 = 'Player 2';
+
+
+    const setName = function () {
+        name1 = prompt('Enter name for player 1');
+        name2 = prompt('Enter name for player 2');
+    }
 
     const updatePlayer = function () {
         if (currentPlayer === 1) {
@@ -21,14 +31,15 @@ const game = (function () {
     }
 
     const resetBoard = function () {
-        board.forEach(row => {
-            row.forEach(col => {
-                col = 0;
-            })
-        })
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                board[i][j] = -1;
+            }
+        }
         square.forEach(square => {
             square.textContent = '';
         })
+        currentPlayer = 1;
     }
 
     const addListeners = function () {
@@ -42,9 +53,14 @@ const game = (function () {
                     }
                     updateBoard(e.target.dataset.row, e.target.dataset.col, currentPlayer);
                     checkWin();
-                    updatePlayer();
                 }
             })
+        })
+        reset.addEventListener('click', function () {
+            resetBoard();
+        })
+        changeName.addEventListener('click', function () {
+            setName();
         })
     }
 
@@ -54,11 +70,16 @@ const game = (function () {
 
     const displayWin = function (winner) {
         if (winner === -1) {
+            updatePlayer();
             return;
         } else if (winner === -2) {
             alert('Tie!');
         } else {
-            alert(`Player ${winner} wins!`);
+            if (winner === 1) {
+                alert(`${name1} wins!`);
+            } else {
+                alert(`${name2} wins!`);
+            }
         }
         resetBoard();
     }
@@ -92,7 +113,8 @@ const game = (function () {
         displayWin(-1);
     }
 
-    return {updatePlayer, updateBoard, getBoard, resetBoard, addListeners, checkWin, checkTie, displayWin};
+    return {updatePlayer, updateBoard, getBoard, resetBoard, addListeners, checkWin, checkTie, displayWin, setName};
 })();
 
+game.setName();
 game.addListeners();

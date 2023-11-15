@@ -6,8 +6,16 @@
     <link href="output.css" rel="stylesheet">
     <script defer src="script.js"></script>
 </head>
-<body>
-<div class="grid grid-cols-3 grid-rows-3 h-screen m-2">
+<body class="flex flex-col h-screen">
+<div class="flex justify-center h-1/6 flex-col items-center">
+    <h3 class="text-4xl">Tic-Tac-Toe</h3>
+    <div class="flex flex-row items-center">
+        <button class="m-2 p-2 border-solid border-2 border-black" id="reset">Reset</button>
+        <button class="m-2 p-2 border-solid border-2 border-black" id="changeName">Change Name</button>
+
+    </div>
+</div>
+<div class="grid grid-cols-3 grid-rows-3 h-5/6 m-2 shrink-0">
     <div class="border-solid border-4 square flex items-center justify-center" data-col="0"
          data-row="0"></div>
     <div class="border-solid border-4 square flex items-center justify-center" data-col="1"
